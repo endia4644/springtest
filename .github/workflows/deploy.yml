@@ -47,34 +47,6 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            mkdir -p /data/apps/nginx
-            cat > /data/apps/docker-compose.yml << 'EOF'
-            services:
-              app:
-                image: ghcr.io/endia4644/springtest:latest
-                restart: always
-                expose:
-                  - "8080"
-              nginx:
-                image: nginx:alpine
-                restart: always
-                ports:
-                  - "80:80"
-                volumes:
-                  - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-                depends_on:
-                  - app
-            EOF
-            cat > /data/apps/nginx/nginx.conf << 'EOF'
-            server {
-                listen 80;
-                location / {
-                    proxy_pass http://app:8080;
-                    proxy_set_header Host $host;
-                    proxy_set_header X-Real-IP $remote_addr;
-                }
-            }
-            EOF
             cd /data/apps
             docker compose pull
             docker compose up -d
