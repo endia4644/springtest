@@ -12,7 +12,7 @@ public class HelloController {
     @GetMapping("/")
     public Map<String, String> hello() {
         return Map.of(
-            "message", "Hello from Spring Boot!",
+            "message", "Hello from Spring Boot!!",
             "time", LocalDateTime.now().toString()
         );
     }
